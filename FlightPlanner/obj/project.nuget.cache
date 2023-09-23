@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "tnbeNEEZFvgRnUdx9TgYmcgZjuKHkU3y31JTn2xX+7lhXcfl9qJtQBzanRlIh8iHO+V+PElP4VU8N8rzfPIvyg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Poga\\Desktop\\Codelex-flightP\\FlightPlanner\\FlightPlanner.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Poga\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\Poga\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Poga\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\Poga\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "C:\\Users\\Poga\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "C:\\Users\\Poga\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
