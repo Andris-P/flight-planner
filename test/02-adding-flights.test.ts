@@ -60,8 +60,8 @@ describe("Adding Flights", () => {
     } catch (e) {
       expect(e.response.status).toBe(409);
     }
-    done();
-  });
+     done();
+   });
 
   it("should not accept wrong values", async done => {
     const requests = [
@@ -187,8 +187,8 @@ describe("Adding Flights", () => {
       })
     );
 
-    done();
-  });
+     done();
+   });
 
   it("should fail on strange dates", async done => {
     const requests = [
