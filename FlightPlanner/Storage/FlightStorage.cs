@@ -53,7 +53,7 @@ namespace FlightPlanner.Storage
             }
         }
 
-        public List<Airport> SearchAirports(string search)
+        public List<Airport> SearchAirportsPhrase(string search)
         {
             var airports = _flightStorage.SelectMany(flight => new[] { flight.From, flight.To })
                 .Where(airport =>
@@ -64,5 +64,7 @@ namespace FlightPlanner.Storage
 
             return airports;
         }
+
+
     }
 }

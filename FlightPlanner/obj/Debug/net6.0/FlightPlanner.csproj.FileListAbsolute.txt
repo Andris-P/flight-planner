@@ -30,3 +30,14 @@ C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\obj\Debug\net6.0\refint\Flig
 C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\obj\Debug\net6.0\FlightPlanner.pdb
 C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\obj\Debug\net6.0\FlightPlanner.genruntimeconfig.cache
 C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\obj\Debug\net6.0\ref\FlightPlanner.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\System.Security.Permissions.dll
