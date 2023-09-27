@@ -11,7 +11,7 @@ describe("Finding Flights", () => {
             DXB.airport,
             baseDate
         )
-
+        console.log(JSON.stringify(request))
         const response = await CustomerFlightApi.searchFlights(request)
 
         expect(response.status).toBe(200)
@@ -25,7 +25,7 @@ describe("Finding Flights", () => {
     });
 
     it("should be able to find flight by id", async done => {
-        console.log(JSON.stringify(FROM_RIGA_TO_STOCKHOLM));
+       
         const addedFlight = (await AdminFlightApi.addFlight(FROM_RIGA_TO_STOCKHOLM)).data
       
         const response = await CustomerFlightApi.findFlightById(addedFlight.id)

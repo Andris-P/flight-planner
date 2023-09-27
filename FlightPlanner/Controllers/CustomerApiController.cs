@@ -65,7 +65,26 @@ namespace FlightPlanner.Controllers
 
             return Ok(flight);
         }
+        [HttpPost]
+        [Route("flights/search")]
+        public IActionResult SearchFlights(string from, string to, DateTime? departureDate,[FromBody] SearchFlightsRequest request)
+        {
+            if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to) || departureDate == null)
+            {
+                return BadRequest("Invalid request: Missing required fields.");
+            }
 
-
+            if (request == null || string.IsNullOrEmpty(request.From.AirportCode)
+                || string.IsNullOrEmpty(request.To.AirportCode)
+                || request.DepartureTime == default)
+            {
+                return Ok(new PageResult<Flight>
+                {
+                    Page = 0,
+                    TotalItems = 0,
+                    Items = new List<Flight>()
+                });
+            }return Ok();
+        }
     }
 }
