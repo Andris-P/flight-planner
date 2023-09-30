@@ -8,7 +8,9 @@ namespace FlightPlanner.Controllers
     [Authorize]
     [Route("admin-api")]
     [ApiController]
+
     public class AdminApiController : ControllerBase
+
     {
         private readonly FlightStorage _storage;
 
@@ -30,7 +32,7 @@ namespace FlightPlanner.Controllers
         [HttpDelete]
         public IActionResult DeleteFlight(int id)
         {
-            lock (lockObject)
+            //lock (lockObject)
             {
                 var flight = _storage.GetFlight(id);
                 if (flight == null)
@@ -47,7 +49,7 @@ namespace FlightPlanner.Controllers
         [HttpPut]
         public IActionResult PutFlight(Flight flight)
         {
-            lock (lockObject)
+            //lock (lockObject)
             {
 
                 if (IsInvalidFlight(flight))

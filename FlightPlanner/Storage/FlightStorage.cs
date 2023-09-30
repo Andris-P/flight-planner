@@ -6,19 +6,15 @@ namespace FlightPlanner.Storage
     {
         private static List<Flight> _flightStorage = new List<Flight>();
         private static int _id = 0;
-       // private object lockObject;
 
         public void AddFlight(Flight flight)
         {
-           // lock (lockObject)
-           // {
-                if (FlightExists(flight))
-                {
-                    return;
-                }
-                flight.Id = _id++;
-                _flightStorage.Add(flight);
-           // }
+            if (FlightExists(flight))
+            {
+                return;
+            }
+            flight.Id = _id++;
+            _flightStorage.Add(flight);
         }
 
         public void Clear()
