@@ -12,6 +12,8 @@ namespace FlightPlanner.Controllers
     {
         private readonly FlightStorage _storage;
 
+        private static object lockObject = new object();
+
         public AdminApiController()
         {
             _storage = new FlightStorage();
@@ -28,43 +30,50 @@ namespace FlightPlanner.Controllers
         [HttpDelete]
         public IActionResult DeleteFlight(int id)
         {
-            var flight = _storage.GetFlight(id);
-            if (flight == null)
+            lock (lockObject)
             {
+                var flight = _storage.GetFlight(id);
+                if (flight == null)
+                {
+                    return Ok();
+                }
+
+                _storage.DeleteFlight(id);
                 return Ok();
             }
-
-            _storage.DeleteFlight(id);
-            return Ok(); 
         }
 
         [Route("flights")]
         [HttpPut]
         public IActionResult PutFlight(Flight flight)
         {
-            if (IsInvalidFlight(flight))
+            lock (lockObject)
             {
-                return BadRequest();
+
+                if (IsInvalidFlight(flight))
+                {
+                    return BadRequest();
+                }
+
+                if (!IsArrivalTimeValid(flight.DepartureTime, flight.ArrivalTime))
+                {
+                    return BadRequest("Arrival time must be at least 10 minutes after departure time and not exceed 2 days.");
+                }
+
+                if (flight.From.AirportCode.Equals(flight.To.AirportCode, StringComparison.OrdinalIgnoreCase))
+                {
+                    return BadRequest("From and To airports cannot be the same.");
+                }
+
+                if (FlightStorage.FlightExists(flight))
+                {
+                    return Conflict();
+                }
+
+                _storage.AddFlight(flight);
+
+                return Created("", flight);
             }
-
-            if (!IsArrivalTimeValid(flight.DepartureTime, flight.ArrivalTime))
-            {
-                return BadRequest("Arrival time must be at least 10 minutes after departure time and not exceed 2 days.");
-            }
-
-            if (flight.From.AirportCode.Equals(flight.To.AirportCode, StringComparison.OrdinalIgnoreCase))
-            {
-                return BadRequest("From and To airports cannot be the same.");
-            }
-
-            if (FlightStorage.FlightExists(flight))
-            {
-                return Conflict();
-            }
-
-            _storage.AddFlight(flight);
-
-            return Created("", flight);
         }
 
         private static bool IsInvalidFlight(Flight flight)

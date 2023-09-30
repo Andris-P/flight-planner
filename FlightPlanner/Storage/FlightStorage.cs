@@ -6,11 +6,19 @@ namespace FlightPlanner.Storage
     {
         private static List<Flight> _flightStorage = new List<Flight>();
         private static int _id = 0;
+       // private object lockObject;
 
         public void AddFlight(Flight flight)
         {
-            flight.Id = _id++;
-            _flightStorage.Add(flight);
+           // lock (lockObject)
+           // {
+                if (FlightExists(flight))
+                {
+                    return;
+                }
+                flight.Id = _id++;
+                _flightStorage.Add(flight);
+           // }
         }
 
         public void Clear()
@@ -65,6 +73,9 @@ namespace FlightPlanner.Storage
             return airports;
         }
 
-
+        public List<Flight> SearchFlights(SearchFlightsRequest request)
+        {
+            return _flightStorage.Where(f => f.From.AirportCode == request.From && f.To.AirportCode == request.To && f.DepartureTime.Contains(request.DepartureDate)).ToList();
+        }
     }
 }

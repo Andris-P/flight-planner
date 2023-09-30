@@ -2,10 +2,9 @@
 {
     public class SearchFlightsRequest
     {
-        internal object DepartureTime;
+        public string From { get; set; }
+        public string To { get; set; }
 
-        public Airport From { get; set; }
-        public Airport To { get; set; }
-        public DateTime Date { get; set; }
+        public string DepartureDate { get; set; }
     }
-}
+} 

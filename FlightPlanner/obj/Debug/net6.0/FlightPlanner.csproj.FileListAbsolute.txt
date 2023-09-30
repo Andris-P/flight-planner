@@ -41,3 +41,4 @@ C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Microsoft.E
 C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\Serilog.dll

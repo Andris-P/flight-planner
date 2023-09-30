@@ -1,12 +1,9 @@
 ﻿using FlightPlanner.Models;
 using FlightPlanner.Storage;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FlightPlanner.Controllers
 {
-    [AllowAnonymous]
     [Route("api")]
     [ApiController]
     public class CustomerAPIController : ControllerBase
@@ -21,27 +18,6 @@ namespace FlightPlanner.Controllers
         [Route("airports")]
         [HttpGet]
 
-        //public IActionResult SearchAirports(string search)
-        //{
-        //    if (string.IsNullOrEmpty(search))
-        //        return BadRequest("Search term is missing or empty");
-
-        //    var airports = _storage.SearchAirportsPhrase(search);
-
-        //    if (airports.Count == 0)
-        //    {
-        //        var pageResult = new PageResult<Airport>
-        //        {
-        //            Page = 0,
-        //            TotalItems = 0,
-        //            Items = new List<Airport>()
-        //        };
-
-        //        return Ok(pageResult);
-        //    }
-
-        //    return Ok(airports);
-        //}
         public IActionResult SearchAirports(string search)
         {
             if (string.IsNullOrEmpty(search))
@@ -65,26 +41,24 @@ namespace FlightPlanner.Controllers
 
             return Ok(flight);
         }
+
         [HttpPost]
         [Route("flights/search")]
-        public IActionResult SearchFlights(string from, string to, DateTime? departureDate,[FromBody] SearchFlightsRequest request)
+        public IActionResult SearchFlights([FromBody] SearchFlightsRequest request)
         {
-            if (string.IsNullOrEmpty(from) || string.IsNullOrEmpty(to) || departureDate == null)
+
+            if (request.From.Equals(request.To, StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest("From and To airports cannot be the same.");
+            }
+
+            if (string.IsNullOrEmpty(request.From) || string.IsNullOrEmpty(request.To) || request.DepartureDate == default)
             {
                 return BadRequest("Invalid request: Missing required fields.");
             }
 
-            if (request == null || string.IsNullOrEmpty(request.From.AirportCode)
-                || string.IsNullOrEmpty(request.To.AirportCode)
-                || request.DepartureTime == default)
-            {
-                return Ok(new PageResult<Flight>
-                {
-                    Page = 0,
-                    TotalItems = 0,
-                    Items = new List<Flight>()
-                });
-            }return Ok();
+            var flights = _storage.SearchFlights(request);
+            return Ok(new { page = 0, totalItems = flights?.Count ?? 0, items = flights ?? new List<Flight>() });
         }
     }
 }
