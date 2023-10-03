@@ -77,46 +77,38 @@ namespace FlightPlanner.Controllers
 
         private static bool IsInvalidFlight(Flight flight)
         {
-            //lock (lockObject)
-            {
-                return flight == null
-                    || !IsAlphaCharactersOnly(flight.From.AirportCode)
-                    || !IsAlphaCharactersOnly(flight.To.AirportCode)
-                    || !IsAlphaCharactersOnly(flight.Carrier)
-                    || string.IsNullOrWhiteSpace(flight.DepartureTime)
-                    || string.IsNullOrWhiteSpace(flight.ArrivalTime);
-            }
+
+            return flight == null
+                || !IsAlphaCharactersOnly(flight.From.AirportCode)
+                || !IsAlphaCharactersOnly(flight.To.AirportCode)
+                || !IsAlphaCharactersOnly(flight.Carrier)
+                || string.IsNullOrWhiteSpace(flight.DepartureTime)
+                || string.IsNullOrWhiteSpace(flight.ArrivalTime);
         }
 
         private static bool IsAlphaCharactersOnly(string value)
         {
-            //lock (lockObject) 
-            {
-                return !string.IsNullOrEmpty(value) && value.All(char.IsLetter) && !value.Contains('\\');
-            }
+            return !string.IsNullOrEmpty(value) && value.All(char.IsLetter) && !value.Contains('\\');
         }
 
         private static bool IsArrivalTimeValid(string departureTime, string arrivalTime)
         {
-            //lock (lockObject)
+            DateTime departure = DateTime.Parse(departureTime);
+            DateTime arrival = DateTime.Parse(arrivalTime);
+
+            TimeSpan timeDifference = arrival - departure;
+
+            if (timeDifference.TotalMinutes < 10)
             {
-                DateTime departure = DateTime.Parse(departureTime);
-                DateTime arrival = DateTime.Parse(arrivalTime);
-
-                TimeSpan timeDifference = arrival - departure;
-
-                if (timeDifference.TotalMinutes < 10)
-                {
-                    return false;
-                }
-
-                if (timeDifference.TotalDays > 2)
-                {
-                    return false;
-                }
-
-                return true;
+                return false;
             }
+
+            if (timeDifference.TotalDays > 2)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
