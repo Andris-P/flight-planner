@@ -4,17 +4,21 @@ namespace FlightPlanner.Storage
 {
     public class FlightStorage
     {
+        private static readonly object _lockObject = new object();
         private static List<Flight> _flightStorage = new List<Flight>();
         private static int _id = 0;
 
         public void AddFlight(Flight flight)
         {
-            if (FlightExists(flight))
+            lock (_lockObject)
             {
-                return;
+                if (FlightExists(flight))
+                {
+                    return;
+                }
+                flight.Id = _id++;
+                _flightStorage.Add(flight);
             }
-            flight.Id = _id++;
-            _flightStorage.Add(flight);
         }
 
         public void Clear()
@@ -50,10 +54,14 @@ namespace FlightPlanner.Storage
 
         public void DeleteFlight(int id)
         {
-            var flightToRemove = GetFlight(id);
-            if (flightToRemove != null)
+            lock (_lockObject)
+
             {
-                _flightStorage.Remove(flightToRemove);
+                var flightToRemove = GetFlight(id);
+                if (flightToRemove != null)
+                {
+                    _flightStorage.Remove(flightToRemove);
+                }
             }
         }
 

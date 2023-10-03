@@ -12,6 +12,7 @@ describe("Concurrency Handling", () => {
     it("should handle concurrent adding & deleting", async done => {
         await Promise.all(_.range(0, 100).map(async () => {
             const request = randomAddFlightRequest()
+            //console.log(JSON.stringify(request))
             const response = await AdminFlightApi.addFlight(request)
             if (response.status === 201) {
                 await AdminFlightApi.deleteFlight(response.data.id)

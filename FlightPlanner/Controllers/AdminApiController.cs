@@ -10,11 +10,9 @@ namespace FlightPlanner.Controllers
     [ApiController]
 
     public class AdminApiController : ControllerBase
-
     {
         private readonly FlightStorage _storage;
-
-        private static object lockObject = new object();
+        private static readonly object lockObject = new object();
 
         public AdminApiController()
         {
@@ -32,7 +30,7 @@ namespace FlightPlanner.Controllers
         [HttpDelete]
         public IActionResult DeleteFlight(int id)
         {
-            //lock (lockObject)
+            lock (lockObject)
             {
                 var flight = _storage.GetFlight(id);
                 if (flight == null)
@@ -49,9 +47,8 @@ namespace FlightPlanner.Controllers
         [HttpPut]
         public IActionResult PutFlight(Flight flight)
         {
-            //lock (lockObject)
+            lock (lockObject)
             {
-
                 if (IsInvalidFlight(flight))
                 {
                     return BadRequest();
@@ -80,37 +77,46 @@ namespace FlightPlanner.Controllers
 
         private static bool IsInvalidFlight(Flight flight)
         {
-            return flight == null
-                || !IsAlphaCharactersOnly(flight.From.AirportCode)
-                || !IsAlphaCharactersOnly(flight.To.AirportCode)
-                || !IsAlphaCharactersOnly(flight.Carrier)
-                || string.IsNullOrWhiteSpace(flight.DepartureTime)
-                || string.IsNullOrWhiteSpace(flight.ArrivalTime);
+            //lock (lockObject)
+            {
+                return flight == null
+                    || !IsAlphaCharactersOnly(flight.From.AirportCode)
+                    || !IsAlphaCharactersOnly(flight.To.AirportCode)
+                    || !IsAlphaCharactersOnly(flight.Carrier)
+                    || string.IsNullOrWhiteSpace(flight.DepartureTime)
+                    || string.IsNullOrWhiteSpace(flight.ArrivalTime);
+            }
         }
 
         private static bool IsAlphaCharactersOnly(string value)
         {
-            return !string.IsNullOrEmpty(value) && value.All(char.IsLetter) && !value.Contains('\\');
+            //lock (lockObject) 
+            {
+                return !string.IsNullOrEmpty(value) && value.All(char.IsLetter) && !value.Contains('\\');
+            }
         }
 
         private static bool IsArrivalTimeValid(string departureTime, string arrivalTime)
         {
-            DateTime departure = DateTime.Parse(departureTime);
-            DateTime arrival = DateTime.Parse(arrivalTime);
-
-            TimeSpan timeDifference = arrival - departure;
-
-            if (timeDifference.TotalMinutes < 10)
+            //lock (lockObject)
             {
-                return false;
-            }
+                DateTime departure = DateTime.Parse(departureTime);
+                DateTime arrival = DateTime.Parse(arrivalTime);
 
-            if (timeDifference.TotalDays > 2)
-            {
-                return false;
-            }
+                TimeSpan timeDifference = arrival - departure;
 
-            return true;
+                if (timeDifference.TotalMinutes < 10)
+                {
+                    return false;
+                }
+
+                if (timeDifference.TotalDays > 2)
+                {
+                    return false;
+                }
+
+                return true;
+            }
         }
     }
 }
