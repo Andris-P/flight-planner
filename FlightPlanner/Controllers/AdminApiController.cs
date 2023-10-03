@@ -79,16 +79,16 @@ namespace FlightPlanner.Controllers
         {
 
             return flight == null
-                || !IsAlphaCharactersOnly(flight.From.AirportCode)
-                || !IsAlphaCharactersOnly(flight.To.AirportCode)
-                || !IsAlphaCharactersOnly(flight.Carrier)
+                || string.IsNullOrEmpty(flight.From.AirportCode)
+                || string.IsNullOrEmpty(flight.To.AirportCode)
+                || string.IsNullOrEmpty(flight.Carrier)
                 || string.IsNullOrWhiteSpace(flight.DepartureTime)
                 || string.IsNullOrWhiteSpace(flight.ArrivalTime);
         }
 
-        private static bool IsAlphaCharactersOnly(string value)
+        private static bool IsValidAlphaNumeric(string value)
         {
-            return !string.IsNullOrEmpty(value) && value.All(char.IsLetter) && !value.Contains('\\');
+            return !string.IsNullOrEmpty(value) && value.All(char.IsLetterOrDigit) && !value.Contains('\\');
         }
 
         private static bool IsArrivalTimeValid(string departureTime, string arrivalTime)
@@ -98,12 +98,12 @@ namespace FlightPlanner.Controllers
 
             TimeSpan timeDifference = arrival - departure;
 
-            if (timeDifference.TotalMinutes < 10)
+            if (timeDifference.TotalMinutes < 1)
             {
                 return false;
             }
 
-            if (timeDifference.TotalDays > 2)
+            if (timeDifference.TotalDays > 10)
             {
                 return false;
             }

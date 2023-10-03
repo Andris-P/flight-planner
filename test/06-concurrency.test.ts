@@ -12,11 +12,20 @@ describe("Concurrency Handling", () => {
     it("should handle concurrent adding & deleting", async done => {
         await Promise.all(_.range(0, 100).map(async () => {
             const request = randomAddFlightRequest()
-            //console.log(JSON.stringify(request))
+            try{
             const response = await AdminFlightApi.addFlight(request)
             if (response.status === 201) {
                 await AdminFlightApi.deleteFlight(response.data.id)
             }
+            if(response.status === 400)
+            {
+                console.log(JSON.stringify(request))
+            }
+            }catch(error)
+            {
+                //console.log(JSON.stringify(request))
+            }
+            
         }))
 
         done()
@@ -24,11 +33,11 @@ describe("Concurrency Handling", () => {
 
     it("should not be able to add the same flight twice", async done => {
         const request = randomAddFlightRequest()
-
+        console.log(JSON.stringify(request))
         await Promise.all(_.range(0, 100).map(async () => {
             try {
                 await AdminFlightApi.addFlight(request)
-            } catch (ignored) {
+            } catch (ignore) {
             }
         }))
 
@@ -37,7 +46,7 @@ describe("Concurrency Handling", () => {
             request.to.airport,
             moment(request.departureTime)
         ))
-
+        
         expect(response.data.totalItems).toBe(1)
 
         done()

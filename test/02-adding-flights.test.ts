@@ -13,7 +13,7 @@ describe("Adding Flights", () => {
     baseDateTime,
     moment(baseDateTime).add(1, "day")
   );
-
+  console.log(JSON.stringify(request))
   it("should be able to add flights", async done => {
     const response = await AdminFlightApi.addFlight(request);
 

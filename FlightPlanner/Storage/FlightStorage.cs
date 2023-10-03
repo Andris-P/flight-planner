@@ -28,14 +28,17 @@ namespace FlightPlanner.Storage
 
         public static bool FlightExists(Flight flight)
         {
-            foreach (var existingFlight in _flightStorage)
+            lock (_lockObject)
             {
-                if (AreFlightsEqual(existingFlight, flight))
+                foreach (var existingFlight in _flightStorage)
                 {
-                    return true;
+                    if (AreFlightsEqual(existingFlight, flight))
+                    {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
         }
 
         private static bool AreFlightsEqual(Flight flight1, Flight flight2)
