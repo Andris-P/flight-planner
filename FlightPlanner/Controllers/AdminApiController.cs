@@ -56,7 +56,7 @@ namespace FlightPlanner.Controllers
 
                 if (!IsArrivalTimeValid(flight.DepartureTime, flight.ArrivalTime))
                 {
-                    return BadRequest("Arrival time must be at least 10 minutes after departure time and not exceed 2 days.");
+                    return BadRequest("Arrival time must be at least 1 minutes after departure time and not exceed 10 days.");
                 }
 
                 if (flight.From.AirportCode.Equals(flight.To.AirportCode, StringComparison.OrdinalIgnoreCase))
