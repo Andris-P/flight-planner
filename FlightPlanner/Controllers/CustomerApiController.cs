@@ -1,6 +1,7 @@
 ﻿using FlightPlanner.Models;
 using FlightPlanner.Storage;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlightPlanner.Controllers
 {
@@ -9,10 +10,13 @@ namespace FlightPlanner.Controllers
     public class CustomerAPIController : ControllerBase
     {
         private readonly FlightStorage _storage;
+        private readonly FlightPlannerDbContext _context;
 
-        public CustomerAPIController()
+
+        public CustomerAPIController(FlightPlannerDbContext context)
         {
-            _storage = new FlightStorage();
+            _storage = new FlightStorage(context);
+            _context = context;
         }
 
         [Route("airports")]
@@ -23,9 +27,15 @@ namespace FlightPlanner.Controllers
             if (string.IsNullOrEmpty(search))
                 return BadRequest("Search term is missing or empty");
 
-            var airports = _storage.SearchAirportsPhrase(search);
+            var airports = _context.Airports
+                .Where(airport =>
+                    airport.Country.ToLower().Contains(search.ToLower().Trim()) ||
+                    airport.City.ToLower().Contains(search.ToLower().Trim()) ||
+                    airport.AirportCode.ToLower().Contains(search.ToLower().Trim())
+                )
+                .ToList();
 
-            if (airports == null)
+            if (airports == null || airports.Count == 0)
                 return NotFound("No airports found");
 
             return Ok(airports);
@@ -35,7 +45,11 @@ namespace FlightPlanner.Controllers
         [HttpGet]
         public IActionResult FindFlightById(int id)
         {
-            var flight = _storage.GetFlight(id);
+            var flight = _context.Flights
+                .Include(f => f.From)
+                .Include(f => f.To)
+                .SingleOrDefault(f => f.Id == id);
+
             if (flight == null)
                 return NotFound();
 
@@ -46,7 +60,6 @@ namespace FlightPlanner.Controllers
         [Route("flights/search")]
         public IActionResult SearchFlights([FromBody] SearchFlightsRequest request)
         {
-
             if (request.From.Equals(request.To, StringComparison.OrdinalIgnoreCase))
             {
                 return BadRequest("From and To airports cannot be the same.");
@@ -57,7 +70,12 @@ namespace FlightPlanner.Controllers
                 return BadRequest("Invalid request: Missing required fields.");
             }
 
-            var flights = _storage.SearchFlights(request);
+            var flights = _context.Flights
+                .Include(f => f.From)
+                .Include(f => f.To)
+                .Where(f => f.From.AirportCode == request.From && f.To.AirportCode == request.To && f.DepartureTime.Contains(request.DepartureDate))
+                .ToList();
+
             return Ok(new { page = 0, totalItems = flights?.Count ?? 0, items = flights ?? new List<Flight>() });
         }
     }

@@ -56,10 +56,5 @@ namespace FlightPlanner.Handlers
 
             return AuthenticateResult.Success(ticket);
         }
-
-            
-
-
-
     }
 }

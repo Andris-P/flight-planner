@@ -12,6 +12,6 @@ namespace FlightPlanner
 
         public DbSet<Flight> Flights { get; set; }
 
-        public DbSet<Airport> Airports { get; set; }
+        public DbSet<Airport> Airports { get; set; } 
     }
 }
