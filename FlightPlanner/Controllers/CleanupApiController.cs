@@ -24,7 +24,6 @@ namespace FlightPlanner.Controllers
             _context.Flights.RemoveRange(_context.Flights);
             _context.Airports.RemoveRange(_context.Airports);
             _context.SaveChanges();
-            //_storage.Clear();
 
             return Ok();
         }

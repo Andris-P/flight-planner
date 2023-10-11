@@ -5,18 +5,12 @@ namespace FlightPlanner.Storage
     public class FlightStorage
     {
         private static readonly object _lockObject = new object();
-        //private static List<Flight> _flightStorage = new List<Flight>();
         private readonly FlightPlannerDbContext _context;
-        //private static int _id = 0;
 
         public FlightStorage(FlightPlannerDbContext context)
         {
             _context = context;
         }
-
-        // public FlightStorage()
-        // {
-        // }
 
         public void AddFlight(Flight flight)
         {
@@ -31,7 +25,6 @@ namespace FlightPlanner.Storage
         {
             _context.Flights.RemoveRange(_context.Flights);
             _context.SaveChanges();
-            //_flightStorage.Clear();
         }
 
         public bool FlightExists(Flight flight)
@@ -43,17 +36,6 @@ namespace FlightPlanner.Storage
           f.DepartureTime == flight.DepartureTime &&
           f.ArrivalTime == flight.ArrivalTime);
         }
-
-        //{
-        //    foreach (var existingFlight in _flightStorage)
-        //    {
-        //        if (AreFlightsEqual(existingFlight, flight))
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
 
         private static bool AreFlightsEqual(Flight flight1, Flight flight2)
         {

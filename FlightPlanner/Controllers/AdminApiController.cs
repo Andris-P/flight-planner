@@ -86,7 +86,6 @@ namespace FlightPlanner.Controllers
 
                 _context.Flights.Add(flight);
                 _context.SaveChanges();
-                //_storage.AddFlight(flight);
 
                 return Created("", flight);
             }
