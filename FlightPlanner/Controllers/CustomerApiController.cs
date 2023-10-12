@@ -1,5 +1,5 @@
 ﻿using FlightPlanner.Models;
-using FlightPlanner.Storage;
+//using FlightPlanner.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,13 +9,13 @@ namespace FlightPlanner.Controllers
     [ApiController]
     public class CustomerAPIController : ControllerBase
     {
-        private readonly FlightStorage _storage;
+        //private readonly FlightStorage _storage;
         private readonly FlightPlannerDbContext _context;
 
 
         public CustomerAPIController(FlightPlannerDbContext context)
         {
-            _storage = new FlightStorage(context);
+           // _storage = new FlightStorage(context);
             _context = context;
         }
 
@@ -76,7 +76,7 @@ namespace FlightPlanner.Controllers
                 .Where(f => f.From.AirportCode == request.From && f.To.AirportCode == request.To && f.DepartureTime.Contains(request.DepartureDate))
                 .ToList();
 
-            return Ok(new { page = 0, totalItems = flights?.Count ?? 0, items = flights ?? new List<Flight>() });
+            return Ok(new { page = 0, totalItems = flights?.Count ?? 0, items = flights});
         }
     }
 }

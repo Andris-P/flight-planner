@@ -8,6 +8,9 @@
     ".NETCoreApp,Version=v6.0": {
       "FlightPlanner/1.0.0": {
         "dependencies": {
+          "FlightPlanner.Core": "1.0.0",
+          "FlightPlanner.Data": "1.0.0",
+          "FlightPlanner.Services": "1.0.0",
           "Microsoft.AspNetCore.Mvc.RazorPages": "2.2.5",
           "Microsoft.EntityFrameworkCore": "6.0.22",
           "Microsoft.EntityFrameworkCore.Design": "6.0.22",
@@ -1665,6 +1668,30 @@
           "System.Xml.XDocument": "4.3.0",
           "System.Xml.XPath": "4.3.0"
         }
+      },
+      "FlightPlanner.Core/1.0.0": {
+        "runtime": {
+          "FlightPlanner.Core.dll": {}
+        }
+      },
+      "FlightPlanner.Data/1.0.0": {
+        "dependencies": {
+          "FlightPlanner.Core": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.22",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.22"
+        },
+        "runtime": {
+          "FlightPlanner.Data.dll": {}
+        }
+      },
+      "FlightPlanner.Services/1.0.0": {
+        "dependencies": {
+          "FlightPlanner.Core": "1.0.0",
+          "FlightPlanner.Data": "1.0.0"
+        },
+        "runtime": {
+          "FlightPlanner.Services.dll": {}
+        }
       }
     }
   },
@@ -2947,6 +2974,21 @@
       "sha512": "sha512-jw9oHHEIVW53mHY9PgrQa98Xo2IZ0ZjrpdOTmtvk+Rvg4tq7dydmxdNqUvJ5YwjDqhn75mBXWttWjiKhWP53LQ==",
       "path": "system.xml.xpath.xdocument/4.3.0",
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
+    },
+    "FlightPlanner.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FlightPlanner.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FlightPlanner.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

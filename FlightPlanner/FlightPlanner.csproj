@@ -23,4 +23,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Storage\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FlightPlanner.Core\FlightPlanner.Core.csproj" />
+    <ProjectReference Include="..\FlightPlanner.Data\FlightPlanner.Data.csproj" />
+    <ProjectReference Include="..\FlightPlanner.Services\FlightPlanner.Services.csproj" />
+  </ItemGroup>
+
 </Project>

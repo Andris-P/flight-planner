@@ -1,0 +1,17 @@
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\bin\Debug\net6.0\FlightPlanner.Data.deps.json
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\bin\Debug\net6.0\FlightPlanner.Data.runtimeconfig.json
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\bin\Debug\net6.0\FlightPlanner.Data.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\bin\Debug\net6.0\FlightPlanner.Data.pdb
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\bin\Debug\net6.0\FlightPlanner.Core.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\bin\Debug\net6.0\FlightPlanner.Core.pdb
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\FlightPlanner.Data.csproj.AssemblyReference.cache
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\FlightPlanner.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\FlightPlanner.Data.AssemblyInfoInputs.cache
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\FlightPlanner.Data.AssemblyInfo.cs
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\FlightPlanner.Data.csproj.CoreCompileInputs.cache
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\FlightPlanner.Data.csproj.CopyComplete
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\FlightPlanner.Data.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\refint\FlightPlanner.Data.dll
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\FlightPlanner.Data.pdb
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\FlightPlanner.Data.genruntimeconfig.cache
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner.Data\obj\Debug\net6.0\ref\FlightPlanner.Data.dll

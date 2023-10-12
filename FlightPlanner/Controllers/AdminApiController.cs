@@ -1,8 +1,8 @@
-﻿using FlightPlanner.Models;
-using FlightPlanner.Storage;
+﻿using FlightPlanner.Core.Models;
+using FlightPlanner.Core.Services;
+using FlightPlanner.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FlightPlanner.Controllers
 {
@@ -11,29 +11,30 @@ namespace FlightPlanner.Controllers
     [ApiController]
     public class AdminApiController : ControllerBase
     {
-        private readonly FlightStorage _storage;
-        private readonly FlightPlannerDbContext _context;
-        private static readonly object lockObject = new object();
+        private readonly IEntityService<Flight> _flightService;
+        //private readonly FlightPlannerDbContext _context;
+        //private static readonly object lockObject = new object();
 
-        public AdminApiController(FlightPlannerDbContext context)
+        public AdminApiController(IEntityService<Flight> flightService)
         {
-            _context = context;
-            _storage = new FlightStorage(context);
+            _flightService = flightService;
         }
 
         [Route("flights/{id}")]
         [HttpGet]
         public IActionResult GetFlight(int id)
         {
-            var flight = _context.Flights
-                .Include(f => f.From)
-                .Include(f => f.To)
-                .SingleOrDefault(f => f.Id == id);
+            Flight flight = _flightService.GetById(id);
+            //var flight = _context.Flights
+            //    .Include(f => f.From)
+            //    .Include(f => f.To)
+            //    .SingleOrDefault(f => f.Id == id);
 
             if (flight == null)
             {
                 return NotFound();
             }
+
             return Ok(flight);
         }
 
@@ -41,54 +42,101 @@ namespace FlightPlanner.Controllers
         [HttpDelete]
         public IActionResult DeleteFlight(int id)
         {
-            lock (lockObject)
+            //lock (lockObject)
+            //{
+            Flight flight = null;  //_storage.GetFlight(id);
+            if (flight == null)
             {
-                var flight = _storage.GetFlight(id);
-                if (flight == null)
-                {
-                    return Ok();
-                }
-
-                _storage.DeleteFlight(id);
                 return Ok();
             }
+
+            //_storage.DeleteFlight(id);
+            return Ok();
+            //}
         }
 
         [Route("flights")]
         [HttpPut]
-        public IActionResult PutFlight(Flight flight)
+        public IActionResult PutFlight(FlightRequest request)
         {
-            lock (lockObject)
+            var flight = MapToFlight(request);
+            //lock (lockObject)
+            //{ 
+
+            if (IsInvalidFlight(flight))
             {
-
-                if (IsInvalidFlight(flight))
-                {
-                    return BadRequest();
-                }
-
-                if (!IsArrivalTimeValid(flight.DepartureTime, flight.ArrivalTime))
-                {
-                    return BadRequest("Arrival time must be at least 1 minutes after departure time and not exceed 10 days.");
-                }
-
-                Console.WriteLine($"From: {flight.From?.AirportCode}, To: {flight.To?.AirportCode}");
-
-
-                if (flight.From.AirportCode.Trim().Equals(flight.To.AirportCode.Trim(), StringComparison.OrdinalIgnoreCase))
-                {
-                    return BadRequest("From and To airports cannot be the same.");
-                }
-
-                if (_storage.FlightExists(flight))
-                {
-                    return Conflict();
-                }
-
-                _context.Flights.Add(flight);
-                _context.SaveChanges();
-
-                return Created("", flight);
+                return BadRequest();
             }
+
+            if (!IsArrivalTimeValid(flight.DepartureTime, flight.ArrivalTime))
+            {
+                return BadRequest("Arrival time must be at least 1 minutes after departure time and not exceed 10 days.");
+            }
+
+            Console.WriteLine($"From: {flight.From?.AirportCode}, To: {flight.To?.AirportCode}");
+
+
+            if (flight.From.AirportCode.Trim().Equals(flight.To.AirportCode.Trim(), StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest("From and To airports cannot be the same.");
+            }
+
+            //if (_storage.FlightExists(flight))
+            //{
+             //   return Conflict("Flight exists");
+           // }
+
+            _flightService.Create(flight);
+            request = MapToFlightRequest(flight);
+
+            return Created("", flight);
+            //}
+        }
+
+        private Flight MapToFlight(FlightRequest request)
+        {
+            return new Flight
+            {
+                Id = request.Id,
+                ArrivalTime = request.ArrivalTime,
+                Carrier = request.Carrier,
+                DepartureTime = request.DepartureTime,
+                From = new Airport
+                {
+                    AirportCode = request.From.Airport,
+                    City = request.From.City,
+                    Country = request.From.Country,
+                },
+                To = new Airport
+                {
+                    AirportCode = request.To.Airport,
+                    City = request.To.City,
+                    Country = request.To.Country,
+                },
+            };
+        }
+
+        private FlightRequest MapToFlightRequest(Flight flight)
+        {
+            return new FlightRequest
+            {
+                ArrivalTime = flight.ArrivalTime,
+                Carrier = flight.Carrier,
+                DepartureTime = flight.DepartureTime,
+                From = new AirportRequest
+                {
+                    City = flight.From.City,
+                    Airport = flight.From.AirportCode,
+                    Country = flight.From.Country,
+                },
+                To = new AirportRequest 
+                {
+                    City = flight.To.City,
+                    Airport = flight.To.AirportCode,
+                    Country = flight.To.Country,
+                },
+                Id = flight.Id,
+            };
         }
 
         private static bool IsInvalidFlight(Flight flight)

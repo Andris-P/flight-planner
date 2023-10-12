@@ -3225,6 +3225,45 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
+      },
+      "FlightPlanner.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/FlightPlanner.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FlightPlanner.Core.dll": {}
+        }
+      },
+      "FlightPlanner.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "FlightPlanner.Core": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "6.0.22",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.22"
+        },
+        "compile": {
+          "bin/placeholder/FlightPlanner.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FlightPlanner.Data.dll": {}
+        }
+      },
+      "FlightPlanner.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "FlightPlanner.Core": "1.0.0",
+          "FlightPlanner.Data": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FlightPlanner.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FlightPlanner.Services.dll": {}
+        }
       }
     }
   },
@@ -9281,10 +9320,28 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
+    },
+    "FlightPlanner.Core/1.0.0": {
+      "type": "project",
+      "path": "../FlightPlanner.Core/FlightPlanner.Core.csproj",
+      "msbuildProject": "../FlightPlanner.Core/FlightPlanner.Core.csproj"
+    },
+    "FlightPlanner.Data/1.0.0": {
+      "type": "project",
+      "path": "../FlightPlanner.Data/FlightPlanner.Data.csproj",
+      "msbuildProject": "../FlightPlanner.Data/FlightPlanner.Data.csproj"
+    },
+    "FlightPlanner.Services/1.0.0": {
+      "type": "project",
+      "path": "../FlightPlanner.Services/FlightPlanner.Services.csproj",
+      "msbuildProject": "../FlightPlanner.Services/FlightPlanner.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "FlightPlanner.Core >= 1.0.0",
+      "FlightPlanner.Data >= 1.0.0",
+      "FlightPlanner.Services >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.RazorPages >= 2.2.5",
       "Microsoft.EntityFrameworkCore >= 6.0.22",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.22",
@@ -9327,7 +9384,17 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Poga\\Desktop\\Codelex-flightP\\FlightPlanner.Core\\FlightPlanner.Core.csproj": {
+              "projectPath": "C:\\Users\\Poga\\Desktop\\Codelex-flightP\\FlightPlanner.Core\\FlightPlanner.Core.csproj"
+            },
+            "C:\\Users\\Poga\\Desktop\\Codelex-flightP\\FlightPlanner.Data\\FlightPlanner.Data.csproj": {
+              "projectPath": "C:\\Users\\Poga\\Desktop\\Codelex-flightP\\FlightPlanner.Data\\FlightPlanner.Data.csproj"
+            },
+            "C:\\Users\\Poga\\Desktop\\Codelex-flightP\\FlightPlanner.Services\\FlightPlanner.Services.csproj": {
+              "projectPath": "C:\\Users\\Poga\\Desktop\\Codelex-flightP\\FlightPlanner.Services\\FlightPlanner.Services.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
