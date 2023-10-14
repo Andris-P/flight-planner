@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "5G6sg7TMdnWwCVjAMT+SVdFKHLe90bCAaevT9QcGyS8nPYAm7U80Fd0dlV6ewdGYyAZOq/DBZetyU5+5+Uz8NA==",
+  "dgSpecHash": "tqDvgAO6hzw+Eq+WJBbD9vkdexhihv9XFx3zM/pgty8QK7gaSMj4Eyjh8SwCLMrxqBINTYnxg8m0mCjIgmxbWg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Poga\\Desktop\\Codelex-flightP\\FlightPlanner\\FlightPlanner.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Poga\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Poga\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Poga\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
     "C:\\Users\\Poga\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
@@ -41,7 +42,7 @@
     "C:\\Users\\Poga\\.nuget\\packages\\microsoft.codeanalysis.common\\2.8.0\\microsoft.codeanalysis.common.2.8.0.nupkg.sha512",
     "C:\\Users\\Poga\\.nuget\\packages\\microsoft.codeanalysis.csharp\\2.8.0\\microsoft.codeanalysis.csharp.2.8.0.nupkg.sha512",
     "C:\\Users\\Poga\\.nuget\\packages\\microsoft.codeanalysis.razor\\2.2.0\\microsoft.codeanalysis.razor.2.2.0.nupkg.sha512",
-    "C:\\Users\\Poga\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Poga\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Poga\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
     "C:\\Users\\Poga\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.1.1\\microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512",
     "C:\\Users\\Poga\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\2.1.0\\microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512",

@@ -83,3 +83,4 @@ C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\FlightPlann
 C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\FlightPlanner.Core.pdb
 C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\FlightPlanner.Data.pdb
 C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\FlightPlanner.Services.pdb
+C:\Users\Poga\Desktop\Codelex-flightP\FlightPlanner\bin\Debug\net6.0\AutoMapper.dll

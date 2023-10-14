@@ -1,14 +1,15 @@
 ﻿using FlightPlanner.Core.Models;
 using FlightPlanner.Core.Services;
+using FlightPlanner.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlightPlanner.Services
 {
     public class DbService : IDbService
     {
-        protected FlightPlannerDbContext _context;
+        protected IFlightPlannerDbContext _context;
 
-        public DbService(FlightPlannerDbContext context)
+        public DbService(IFlightPlannerDbContext context)
         {
             _context = context;
         }

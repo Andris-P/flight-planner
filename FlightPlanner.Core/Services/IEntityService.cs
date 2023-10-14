@@ -8,7 +8,7 @@ namespace FlightPlanner.Core.Services
         IQueryable<T> QueryById(int id);
         IEnumerable<T> Get() ;
 
-        T GetById(int id);
+        T? GetById(int id);
         void Create(T entity) ;
         void Delete(T entity);
         void Update(T entity);

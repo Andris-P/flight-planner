@@ -1,11 +1,12 @@
 ﻿using FlightPlanner.Core.Models;
 using FlightPlanner.Core.Services;
+using FlightPlanner.Data;
 
 namespace FlightPlanner.Services
 {
     public class EntityService<T> : DbService, IEntityService<T> where T : Entity
     {
-        public EntityService(FlightPlannerDbContext context) : base(context) 
+        public EntityService(IFlightPlannerDbContext context) : base(context) 
         { 
         }
 

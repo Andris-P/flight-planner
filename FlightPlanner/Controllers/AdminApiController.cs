@@ -1,4 +1,6 @@
-﻿using FlightPlanner.Core.Models;
+﻿using AutoMapper;
+using FlightPlanner.Core.Interfaces;
+using FlightPlanner.Core.Models;
 using FlightPlanner.Core.Services;
 using FlightPlanner.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -11,162 +13,51 @@ namespace FlightPlanner.Controllers
     [ApiController]
     public class AdminApiController : ControllerBase
     {
-        private readonly IEntityService<Flight> _flightService;
-        //private readonly FlightPlannerDbContext _context;
-        //private static readonly object lockObject = new object();
+        private readonly IFlightService _flightService;
+        private readonly IMapper _mapper;
+        private readonly IEnumerable<IValidate> _validators;
 
-        public AdminApiController(IEntityService<Flight> flightService)
+        public AdminApiController(IFlightService flightService, IMapper mapper, IEnumerable<IValidate> validators)
         {
             _flightService = flightService;
+            _mapper = mapper;
+            _validators = validators;
         }
 
         [Route("flights/{id}")]
         [HttpGet]
         public IActionResult GetFlight(int id)
         {
-            Flight flight = _flightService.GetById(id);
-            //var flight = _context.Flights
-            //    .Include(f => f.From)
-            //    .Include(f => f.To)
-            //    .SingleOrDefault(f => f.Id == id);
+            var flight = _flightService.GetFullFlightById(id);
 
             if (flight == null)
             {
                 return NotFound();
             }
 
-            return Ok(flight);
-        }
-
-        [Route("flights/{id}")]
-        [HttpDelete]
-        public IActionResult DeleteFlight(int id)
-        {
-            //lock (lockObject)
-            //{
-            Flight flight = null;  //_storage.GetFlight(id);
-            if (flight == null)
-            {
-                return Ok();
-            }
-
-            //_storage.DeleteFlight(id);
-            return Ok();
-            //}
+            return Ok(_mapper.Map<FlightRequest>(flight));
         }
 
         [Route("flights")]
         [HttpPut]
         public IActionResult PutFlight(FlightRequest request)
         {
-            var flight = MapToFlight(request);
-            //lock (lockObject)
-            //{ 
-
-            if (IsInvalidFlight(flight))
+            var flight = _mapper.Map<Flight>(request);
+           
+            if (!_validators.All(v => v.IsValid(flight)))
             {
                 return BadRequest();
             }
 
-            if (!IsArrivalTimeValid(flight.DepartureTime, flight.ArrivalTime))
+            if (_flightService.Exists(flight))
             {
-                return BadRequest("Arrival time must be at least 1 minutes after departure time and not exceed 10 days.");
+                return Conflict();
             }
-
-            Console.WriteLine($"From: {flight.From?.AirportCode}, To: {flight.To?.AirportCode}");
-
-
-            if (flight.From.AirportCode.Trim().Equals(flight.To.AirportCode.Trim(), StringComparison.OrdinalIgnoreCase))
-            {
-                return BadRequest("From and To airports cannot be the same.");
-            }
-
-            //if (_storage.FlightExists(flight))
-            //{
-             //   return Conflict("Flight exists");
-           // }
 
             _flightService.Create(flight);
-            request = MapToFlightRequest(flight);
+            request = _mapper.Map<FlightRequest>(flight);
 
-            return Created("", flight);
-            //}
-        }
-
-        private Flight MapToFlight(FlightRequest request)
-        {
-            return new Flight
-            {
-                Id = request.Id,
-                ArrivalTime = request.ArrivalTime,
-                Carrier = request.Carrier,
-                DepartureTime = request.DepartureTime,
-                From = new Airport
-                {
-                    AirportCode = request.From.Airport,
-                    City = request.From.City,
-                    Country = request.From.Country,
-                },
-                To = new Airport
-                {
-                    AirportCode = request.To.Airport,
-                    City = request.To.City,
-                    Country = request.To.Country,
-                },
-            };
-        }
-
-        private FlightRequest MapToFlightRequest(Flight flight)
-        {
-            return new FlightRequest
-            {
-                ArrivalTime = flight.ArrivalTime,
-                Carrier = flight.Carrier,
-                DepartureTime = flight.DepartureTime,
-                From = new AirportRequest
-                {
-                    City = flight.From.City,
-                    Airport = flight.From.AirportCode,
-                    Country = flight.From.Country,
-                },
-                To = new AirportRequest 
-                {
-                    City = flight.To.City,
-                    Airport = flight.To.AirportCode,
-                    Country = flight.To.Country,
-                },
-                Id = flight.Id,
-            };
-        }
-
-        private static bool IsInvalidFlight(Flight flight)
-        {
-            return flight == null
-                || string.IsNullOrEmpty(flight.From.AirportCode)
-                || string.IsNullOrEmpty(flight.To.AirportCode)
-                || string.IsNullOrEmpty(flight.Carrier)
-                || string.IsNullOrWhiteSpace(flight.DepartureTime)
-                || string.IsNullOrWhiteSpace(flight.ArrivalTime);
-        }
-
-        private static bool IsArrivalTimeValid(string departureTime, string arrivalTime)
-        {
-            DateTime departure = DateTime.Parse(departureTime);
-            DateTime arrival = DateTime.Parse(arrivalTime);
-
-            TimeSpan timeDifference = arrival - departure;
-
-            if (timeDifference.TotalMinutes < 1)
-            {
-                return false;
-            }
-
-            if (timeDifference.TotalDays > 10)
-            {
-                return false;
-            }
-
-            return true;
+            return Created("", request);
         }
     }
 }
