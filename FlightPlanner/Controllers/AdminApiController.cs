@@ -57,7 +57,7 @@ namespace FlightPlanner.Controllers
             _flightService.Create(flight);
             request = _mapper.Map<FlightRequest>(flight);
 
-            return Created("", request);
+            return Created("",    request);
         }
     }
 }
