@@ -27,8 +27,9 @@ describe("Finding Flights", () => {
     it("should be able to find flight by id", async done => {
        
         const addedFlight = (await AdminFlightApi.addFlight(FROM_RIGA_TO_STOCKHOLM)).data
-      
+      //console.log(JSON.stringify(addedFlight))
         const response = await CustomerFlightApi.findFlightById(addedFlight.id)
+       // console.log(JSON.stringify(response))
 
         expect(response.status).toBe(200)
         expect(response.data).toEqual(addedFlight)

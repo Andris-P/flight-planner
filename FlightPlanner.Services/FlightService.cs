@@ -9,7 +9,6 @@ namespace FlightPlanner.Services
     {
         public FlightService(IFlightPlannerDbContext context) : base(context) { }
 
-
         public Flight? GetFullFlightById(int id)
         {
             return _context.Flights

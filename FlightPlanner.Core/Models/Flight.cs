@@ -15,5 +15,3 @@ namespace FlightPlanner.Core.Models
         public string ArrivalTime { get; set; }
     }
 }
-
-

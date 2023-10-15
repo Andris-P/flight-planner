@@ -1,5 +1,5 @@
-﻿using FlightPlanner.Models;
-//using FlightPlanner.Storage;
+﻿using AutoMapper;
+using FlightPlanner.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,14 +9,13 @@ namespace FlightPlanner.Controllers
     [ApiController]
     public class CustomerAPIController : ControllerBase
     {
-        //private readonly FlightStorage _storage;
         private readonly FlightPlannerDbContext _context;
+        private readonly IMapper _mapper;
 
-
-        public CustomerAPIController(FlightPlannerDbContext context)
+        public CustomerAPIController(FlightPlannerDbContext context, IMapper mapper)
         {
-           // _storage = new FlightStorage(context);
             _context = context;
+            _mapper = mapper;
         }
 
         [Route("airports")]
@@ -31,14 +30,15 @@ namespace FlightPlanner.Controllers
                 .Where(airport =>
                     airport.Country.ToLower().Contains(search.ToLower().Trim()) ||
                     airport.City.ToLower().Contains(search.ToLower().Trim()) ||
-                    airport.AirportCode.ToLower().Contains(search.ToLower().Trim())
-                )
+                    airport.AirportCode.ToLower().Contains(search.ToLower().Trim()))
                 .ToList();
 
             if (airports == null || airports.Count == 0)
                 return NotFound("No airports found");
 
-            return Ok(airports);
+            var airportRequests = _mapper.Map<List<AirportRequest>>(airports);
+
+            return Ok(airportRequests);
         }
 
         [Route("flights/{id}")]
@@ -53,7 +53,9 @@ namespace FlightPlanner.Controllers
             if (flight == null)
                 return NotFound();
 
-            return Ok(flight);
+            var mappedFlight = _mapper.Map<FlightRequest>(flight);
+
+            return Ok(mappedFlight);
         }
 
         [HttpPost]
@@ -76,7 +78,7 @@ namespace FlightPlanner.Controllers
                 .Where(f => f.From.AirportCode == request.From && f.To.AirportCode == request.To && f.DepartureTime.Contains(request.DepartureDate))
                 .ToList();
 
-            return Ok(new { page = 0, totalItems = flights?.Count ?? 0, items = flights});
+            return Ok(new { page = 0, totalItems = flights?.Count ?? 0, items = flights });
         }
     }
 }
